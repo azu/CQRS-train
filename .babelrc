@@ -1,0 +1,16 @@
+{
+  "presets": [
+    "es2015"
+  ],
+  "plugins": [
+    "transform-runtime"
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "jsdoc-to-assert",
+        "babel-plugin-espower"
+      ]
+    }
+  }
+}
