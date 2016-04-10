@@ -1,5 +1,7 @@
 // LICENSE : MIT
 "use strict";
+const EventEmitter = require("events");
+const REPOSITORY_CHANGE = "REPOSITORY_CHANGE";
 import TodoListFactory from "../domain/TodoList/TodoListFactory";
 import TodoList from "../domain/TodoList/TodoList";
 import MemoryDB from "./adpter/MemoryDB";
@@ -7,9 +9,10 @@ const shallowClone = (todoList) => {
     const cloneObject = JSON.parse(JSON.stringify(todoList));
     return TodoListFactory.create(cloneObject);
 };
-// コレクション思考のリポジトリ
-export class TodoListRepository {
+// Collection repository
+export class TodoListRepository extends EventEmitter {
     constructor(database) {
+        super();
         /**
          * @type {MemoryDB}
          */
@@ -45,6 +48,7 @@ export class TodoListRepository {
     save(todoList) {
         this._database.set(`${TodoList.name}.lastUsed`, todoList);
         this._database.set(`${TodoList.name}.${todoList.id}`, todoList);
+        this.emit(REPOSITORY_CHANGE);
     }
 
     /**
@@ -52,6 +56,11 @@ export class TodoListRepository {
      */
     remove(todoList) {
         this._database.delete(`${TodoList.name}.${todoList.id}`);
+        this.emit(REPOSITORY_CHANGE);
+    }
+
+    onChange(handler){
+        this.on(REPOSITORY_CHANGE, handler);
     }
 }
 // singleton

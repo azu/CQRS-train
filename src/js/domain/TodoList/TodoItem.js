@@ -26,6 +26,7 @@ export default class TodoItem {
         this.completed = completed;
     }
 
+    // value object always return new Value
     updateTitle(title) {
         return new TodoItem(Object.assign({}, this, {title}));
     }

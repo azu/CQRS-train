@@ -30,6 +30,9 @@ export class DomainEventAggregator {
         _eventEmitter = domainEventEmitter;
     }
 
+    /**
+     * clear all listened event for testing 
+     */
     clearEventsForTesting() {
         _eventEmitter.removeAllListeners();
     }
