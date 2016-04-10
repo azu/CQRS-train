@@ -6,10 +6,6 @@ import eventAggregator from "./DomainEventAggregator";
 export default class DomainModel extends EventEmitter {
     constructor() {
         super();
-        /**
-         * @type {DomainEventAggregator}
-         */
-        this.eventAggregator = eventAggregator;
     }
 
     /**
@@ -29,6 +25,6 @@ export default class DomainModel extends EventEmitter {
     emitChange() {
         this.emit(STATE_CHANGE_EVENT);
         const entityName = this.constructor.name;
-        this.eventAggregator.publish(entityName);
+        eventAggregator.publish(entityName);
     }
 };

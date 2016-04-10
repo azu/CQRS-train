@@ -6,12 +6,12 @@ import TodoBackendServer from "../../src/js/domain/TodoList/TodoBackendServer";
 import TodoList from "../../src/js/domain/TodoList/TodoList";
 import {TodoListRepository} from "../../src/js/infra/TodoRepository";
 import {TransactionTodoUseCase} from "../../src/js/UseCase/TransactionTodo";
-import {DomainEventAggregator} from "../../src/js/flux/domain/DomainEventAggregator";
+import DomainEventEmitter from "../../src/js/flux/domain/DomainEventEmitter";
+import DomainEventAggregator from "../../src/js/flux/domain/DomainEventAggregator";
 describe("TransactionTodoUseCase", function () {
     it("success transaction", function () {
-        const eventAggregator = new DomainEventAggregator();
+        DomainEventAggregator.eventEmitter = new DomainEventEmitter();
         const mockTodoList = new TodoList();
-        mockTodoList.eventAggregator = eventAggregator;
         // prepare
         const todoListRepository = new TodoListRepository(new MemoryDB());
         todoListRepository.save(mockTodoList);
@@ -27,7 +27,7 @@ describe("TransactionTodoUseCase", function () {
 
         // test
         let callCount = 0;
-        eventAggregator.subscribe(TodoList.name, () => {
+        DomainEventAggregator.subscribe(TodoList.name, (value) => {
             callCount++;
         });
         return useCase.execute({title: "first"}).then(() => {

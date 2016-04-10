@@ -1,6 +1,9 @@
 // LICENSE : MIT
 "use strict";
 import DomainEventEmitter from "./DomainEventEmitter";
+
+
+let _eventEmitter = new DomainEventEmitter();
 /**
  * If you stub for testing, do that
  *
@@ -9,10 +12,24 @@ import DomainEventEmitter from "./DomainEventEmitter";
  */
 export class DomainEventAggregator {
     constructor() {
-        /**
-         * @type {DomainEventEmitter}
-         */
-        this.eventEmitter = new DomainEventEmitter();
+        if (_eventEmitter) {
+            _eventEmitter.removeAllListeners();
+        }
+    }
+
+    /**
+     * @returns {DomainEventEmitter}
+     */
+    get eventEmitter() {
+        return _eventEmitter;
+    }
+
+    /**
+     * @param {DomainEventEmitter }domainEventEmitter
+     */
+    set eventEmitter(domainEventEmitter) {
+        _eventEmitter.removeAllListeners();
+        _eventEmitter = domainEventEmitter;
     }
 
     /**

@@ -5,9 +5,7 @@ import TodoList from "../domain/TodoList/TodoList";
 import MemoryDB from "./adpter/MemoryDB";
 const shallowClone = (todoList) => {
     const cloneObject = JSON.parse(JSON.stringify(todoList));
-    const newTodoList = TodoListFactory.create(cloneObject);
-    newTodoList.eventAggregator = todoList.eventAggregator;
-    return newTodoList;
+    return TodoListFactory.create(cloneObject);
 };
 // コレクション思考のリポジトリ
 export class TodoListRepository {
@@ -50,7 +48,7 @@ export class TodoListRepository {
     }
 
     /**
-     * @param {TrodoList} todoList
+     * @param {TodoList} todoList
      */
     remove(todoList) {
         this._database.remove(`${TodoList.name}.${todoList.id}`);
