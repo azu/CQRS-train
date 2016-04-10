@@ -1,8 +1,6 @@
 // LICENSE : MIT
 "use strict";
 import DomainEventEmitter from "./DomainEventEmitter";
-
-
 let _eventEmitter = new DomainEventEmitter();
 /**
  * If you stub for testing, do that
@@ -27,30 +25,34 @@ export class DomainEventAggregator {
     /**
      * @param {DomainEventEmitter }domainEventEmitter
      */
-    set eventEmitter(domainEventEmitter) {
+    setEventEmitterForTesting(domainEventEmitter) {
         _eventEmitter.removeAllListeners();
         _eventEmitter = domainEventEmitter;
     }
 
+    clearEventsForTesting() {
+        _eventEmitter.removeAllListeners();
+    }
+
     /**
-     * @param {string} EntityName
+     * @param {string} entityName
      * @param {Function} handler
      */
-    subscribe(EntityName, handler) {
+    subscribe(entityName, handler) {
         this.eventEmitter.subscribe(({type, value}) => {
-            if (type === EntityName) {
+            if (type === entityName) {
                 handler(value);
             }
         });
     }
 
     /**
-     * @param EntityName
+     * @param entityName
      * @param value
      */
-    publish(EntityName, value) {
+    publish(entityName, value) {
         this.eventEmitter.publish({
-            type: EntityName,
+            type: entityName,
             value
         });
     }

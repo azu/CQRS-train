@@ -1,8 +1,13 @@
 // LICENSE : MIT
 "use strict";
-import {EventEmitter} from "events";
+const EventEmitter = require("events");
 const STATE_CHANGE_EVENT = "STATE_CHANGE_EVENT";
-export default class StateStore extends EventEmitter {
+import eventAggregator from "./DomainEventAggregator";
+export default class DomainModel extends EventEmitter {
+    constructor() {
+        super();
+    }
+
     /**
      * subscribe change event.
      * if emit change event, then call registered event handler function
@@ -19,5 +24,7 @@ export default class StateStore extends EventEmitter {
      */
     emitChange() {
         this.emit(STATE_CHANGE_EVENT);
+        const entityName = this.constructor.name;
+        eventAggregator.publish(entityName);
     }
 };

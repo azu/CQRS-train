@@ -51,7 +51,7 @@ export class TodoListRepository {
      * @param {TodoList} todoList
      */
     remove(todoList) {
-        this._database.remove(`${TodoList.name}.${todoList.id}`);
+        this._database.delete(`${TodoList.name}.${todoList.id}`);
     }
 }
 // singleton

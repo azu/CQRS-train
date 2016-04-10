@@ -3,13 +3,12 @@
 import TodoBackendServer from "../domain/TodoList/TodoBackendServer"
 import todoListRepository, {TodoListRepository} from "../infra/TodoRepository"
 export class UpdateTodoItemTitleFactory {
-    static publish({itemId, title}) {
+    static create() {
         const todoBackendServer = new TodoBackendServer();
-        const useCase = new UpdateTodoItemTitleUseCase({
+        return new UpdateTodoItemTitleUseCase({
             todoListRepository,
             todoBackendServer
         });
-        return useCase.execute({itemId, title});
     }
 }
 

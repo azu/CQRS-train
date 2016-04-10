@@ -7,7 +7,7 @@ export default class ReadAggregate {
     constructor() {
         /**
          * StateStore array
-         * @type {StateStore[]}
+         * @type {State[]}
          */
         this.stores = [
             new DocumentStateStore({documentRepository}),

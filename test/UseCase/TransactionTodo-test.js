@@ -6,11 +6,12 @@ import TodoBackendServer from "../../src/js/domain/TodoList/TodoBackendServer";
 import TodoList from "../../src/js/domain/TodoList/TodoList";
 import {TodoListRepository} from "../../src/js/infra/TodoRepository";
 import {TransactionTodoUseCase} from "../../src/js/UseCase/TransactionTodo";
-import DomainEventEmitter from "../../src/js/flux/domain/DomainEventEmitter";
-import DomainEventAggregator from "../../src/js/flux/domain/DomainEventAggregator";
+import DomainEventEmitter from "../../src/js/framework/domain/DomainEventEmitter";
+import DomainEventAggregator from "../../src/js/framework/domain/DomainEventAggregator";
 describe("TransactionTodoUseCase", function () {
     it("success transaction", function () {
-        DomainEventAggregator.eventEmitter = new DomainEventEmitter();
+        // mock event emitter
+        DomainEventAggregator.setEventEmitterForTesting(new DomainEventEmitter());
         const mockTodoList = new TodoList();
         // prepare
         const todoListRepository = new TodoListRepository(new MemoryDB());

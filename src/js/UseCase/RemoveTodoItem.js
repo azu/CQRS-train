@@ -1,24 +1,25 @@
 // LICENSE : MIT
 "use strict";
+import UseCase from "../framework/UseCase";
 import TodoBackendServer from "../domain/TodoList/TodoBackendServer"
 import todoListRepository, {TodoListRepository} from "../infra/TodoRepository"
 export class RemoveTodoItemFactory {
-    static publish({itemId}) {
+    static create() {
         const todoBackendServer = new TodoBackendServer();
-        const useCase = new RemoveTodoItemUseCase({
+        return new RemoveTodoItemUseCase({
             todoListRepository,
             todoBackendServer
         });
-        return useCase.execute({itemId});
     }
 }
 
-export class RemoveTodoItemUseCase {
+export class RemoveTodoItemUseCase extends UseCase {
     /**
      * @param {TodoListRepository} todoListRepository
      * @param {TodoBackendServer} todoBackendServer
      */
     constructor({todoListRepository, todoBackendServer}) {
+        super();
         this.todoListRepository = todoListRepository;
         this.todoBackendServer = todoBackendServer;
     }

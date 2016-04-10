@@ -76,6 +76,14 @@ export default class MapLike {
     }
 
     /**
+     * delete value for key
+     * @param {string} key
+     */
+    delete(key){
+        this._store[key] = null;
+    }
+
+    /**
      * clear defined key,value
      * @returns {MapLike}
      */

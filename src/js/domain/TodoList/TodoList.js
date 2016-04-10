@@ -1,7 +1,7 @@
 // LICENSE : MIT
 "use strict";
 const uuid = require('uuid');
-import DomainModel from "../../flux/domain/DomainModel";
+import DomainModel from "../../framework/domain/DomainModel";
 import TodoItem from "./TodoItem";
 export default class TodoList extends DomainModel {
     constructor() {
